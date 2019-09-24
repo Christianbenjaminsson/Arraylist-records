@@ -22,22 +22,30 @@ public class ArraylistRecords {
         printChoises();
 
         while (!quit) {
-           int choise = scanner.nextInt();
-           scanner.nextLine();
+            System.out.print("\nMake a choise: ");
+            int choise = scanner.nextInt();
+            scanner.nextLine();
 
-           switch (choise) {
+            switch (choise) {
                case 1:
-                   System.out.print("Register new Record: ");
+                   addNewRecord();
                    break;
                case 2:
-
+                   database.printRecords();
+                   break;
+               case 3:
+                   printChoises();
+                   break;
+               case 4:
+                   System.out.println("Exits application");
+                   quit = true;
+                   break;
            }
         }
     }
 
     private static void printChoises() {
-        System.out.println("\nMake a choise\n");
-        System.out.println("1. Register new record \n" +
+        System.out.println("\n1. Register new record \n" +
             "2. Show records \n" +
             "3. Show alternatives \n" +
             "4. Quit application");
@@ -45,10 +53,14 @@ public class ArraylistRecords {
 
     public static void addNewRecord() {
         System.out.print("Write name of the record: ");
-        Scanner recordName = scanner.nextLine();
-        System.out.println("Write artist name: ");
-        Scanner artist = scanner.nextLine();
+        String recordName = scanner.nextLine();
+        System.out.print("Write artist name: ");
+        String artist = scanner.nextLine();
         RecordInfo newRecord = RecordInfo.createRecordinfo(recordName, artist);
-
+        if(database.addNewRecord(newRecord)) {
+            System.out.println("New Record registered, record name:  " + recordName + " with artist: " + artist);
+        } else{
+                System.out.println("can not register " + recordName + " it already exists.");
+            }
     }
 }
